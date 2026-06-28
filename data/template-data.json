@@ -1,0 +1,36 @@
+{
+  "_comment": "湖南农业大学高考志愿填报助手 - 数据模板文件。请按照此格式准备您的真实录取数据，然后通过页面上的'导入自定义数据'按钮加载。",
+  "university": {
+    "name": "学校全称",
+    "code": "国标代码",
+    "provinceCode": "省内填报代码",
+    "location": "学校所在城市",
+    "level": "学校层次",
+    "batch": "招生批次"
+  },
+  "referenceYear": 2024,
+  "categories": ["物理类", "历史类"],
+  "majors": [
+    {
+      "id": "专业唯一编号",
+      "name": "专业名称",
+      "category": "物理类 或 历史类",
+      "batch": "本科批",
+      "duration": "四年",
+      "degreeType": "学位类型",
+      "isNationalFirstClass": false,
+      "isCharacteristic": false,
+      "admissionData": {
+        "2024": {
+          "minScore": 500,
+          "maxScore": 520,
+          "avgScore": 510,
+          "minRank": 50000,
+          "planCount": 40
+        }
+      },
+      "tags": ["标签1", "标签2"],
+      "description": "专业简介"
+    }
+  ]
+}
