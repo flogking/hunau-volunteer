@@ -7,8 +7,91 @@
   <title>湖南农业大学高考志愿填报助手</title>
   <link rel="stylesheet" href="css/style.css">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style>
+    /* 密码锁遮罩层 */
+    .lock-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.85);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .lock-overlay.hidden { display: none !important; }
+
+    /* 密码框容器 */
+    .lock-box {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+    .lock-box h2 {
+      margin: 0 0 24px 0;
+      font-size: 1.3rem;
+      color: #1A5F3C;
+    }
+    .lock-box input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+      margin-bottom: 8px;
+    }
+    .lock-box input[type="password"]:focus {
+      border-color: #1A5F3C;
+    }
+    .lock-box button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background: #1A5F3C;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lock-box button:hover {
+      background: #134a2e;
+    }
+    .lock-error {
+      color: #d32f2f;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      display: none;
+      min-height: 20px;
+    }
+    .lock-error.show { display: block; }
+  </style>
 </head>
 <body>
+
+  <!-- 密码锁遮罩 -->
+  <div id="lockOverlay" class="lock-overlay">
+    <div class="lock-box">
+      <h2>请输入密码解锁</h2>
+      <input type="password" id="lockInput" placeholder="请输入密码">
+      <button id="lockBtn">解锁</button>
+      <div id="lockError" class="lock-error">密码错误，请重试</div>
+    </div>
+  </div>
+
+  <div id="main-content" style="display:none">
 
   <!-- Header -->
   <header>
@@ -167,6 +250,8 @@
     </div>
   </footer>
 
+  </div> <!-- end #main-content -->
+
   <!-- Scripts -->
   <script src="js/data.js" charset="UTF-8"></script>
   <script charset="UTF-8">
@@ -180,6 +265,44 @@ var ScoreRankTable = {
   <script src="lib/echarts.min.js" charset="UTF-8"></script>
   <script src="js/charts.js" charset="UTF-8"></script>
   <script src="js/app.js" charset="UTF-8"></script>
+
+  <script>
+  (function() {
+    var validPasswords = [
+      'Kd8#mP9$zQ2@vR5&wX1',
+      'yL4^tN6*oP0!uS3%jH7',
+      'aB9-cE2+fG5=hJ8?kM1',
+      'rT6~vY3_wU0.iO7(pL4',
+      'qW2:eR5;tY8\'uI1)zX6',
+      'cV7/nB0\\mA3?pS9+dF2',
+      'gH4=jK1-lO6*eR8+tY0',
+      'xZ3&cV5^bN7!mQ2@sW4',
+      'jU8%yT1*iO0(pL6)rE3',
+      'fD2?gH5=kJ7+lM9-wQ1'
+    ];
+
+    var overlay = document.getElementById('lockOverlay');
+    var input = document.getElementById('lockInput');
+    var btn = document.getElementById('lockBtn');
+    var error = document.getElementById('lockError');
+    var main = document.getElementById('main-content');
+
+    function unlock() {
+      var val = input.value.trim();
+      if (validPasswords.indexOf(val) !== -1) {
+        overlay.classList.add('hidden');
+        main.style.display = 'block';
+      } else {
+        error.classList.add('show');
+      }
+    }
+
+    btn.addEventListener('click', unlock);
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') unlock();
+    });
+  })();
+  </script>
 
 </body>
 </html>
